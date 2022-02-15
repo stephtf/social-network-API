@@ -1,34 +1,38 @@
 const app = require('express').Router(); 
-// const User = require('../models/User');
+const User = require('../models/User');
 
-
-// The following routes are for the users: `localhost:3001/api/users`
+// get all users
 // localhost:3001/api/users
 app.get('/users', async (req, res) => {
 try {
-    const allUsers = await db.collection('User').find(); 
+    const allUsers = await User.find(); 
     res.status(200).json(allUsers);
 } catch (err) {
     res.status(500).json(err); 
 }
 });
 
-
 // get a single user by their Id
 // localhost:3001/api/users/id 
 app.get('/users/:id', async (req, res) => {
 try {
-    const oneUser = await db.collection('User').findOne({"id": `${req.params.id}`});
+    const oneUser = await User.findOne({"id": `${req.params.id}`});
     res.status(200).json(oneUser);
 } catch (err) {
     res.status(500).json(err);
 }
 });
 
-
-// The followiing POST route is for the users: `/api/users`
-    // - create a new user 
-
+// create a new user
+// localhost:3001/api/users
+app.post('/users', async (req, res) => {
+    try {
+        const newUser = await User.insertOne({ username: req.body.name, email: req.body.email }); 
+        res.status(200).json(newUser);
+    } catch (err) {
+        res.status(500).json(err); 
+    }
+    });
 
 
 
