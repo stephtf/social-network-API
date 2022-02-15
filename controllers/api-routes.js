@@ -2,7 +2,6 @@ const app = require('express').Router();
 // const User = require('../models/User');
 
 
-
 // The following routes are for the users: `localhost:3001/api/users`
 // localhost:3001/api/users
 app.get('/users', async (req, res) => {
