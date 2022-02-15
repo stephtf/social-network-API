@@ -1,13 +1,16 @@
-// reaction is schema only, so it won't become a model/table, but will be added to another model as a sub-document (i think that's what it's called)
+// reaction is schema only, so it won't become a model/table, but will be added to another model as a sub-document 
 
 const mongoose = require('mongoose'); 
 
-// create new instance of the thought schema 
+// create new instance of the schema 
 const reactionSchema = new mongoose.Schema(
 {
     reactionId: 
     // for reaction Id: use mongoose's ObjectId data type; default value is set to new ObjectId
-    {},
+    {
+        type: Schema.Types.ObjectId,
+        default: () => new Types.ObjectId(),
+    },
     reactionBody: { type: String, required: true, maxlength: 280 },
     username: { type: String, required: true },
     createdAt: {
@@ -25,8 +28,8 @@ const reactionSchema = new mongoose.Schema(
 // use a getter method to format the timestamp on query 
 reactionSchema
     .get(function () {
-        return 
+        return this.createdAt.Date.now;
     }); 
 
-module.exports = thoughtSchema;
+module.exports = reactionSchema;
 
