@@ -9,7 +9,7 @@ const reactionSchema = new mongoose.Schema(
     // for reaction Id: use mongoose's ObjectId data type; default value is set to new ObjectId
     {},
     reactionBody: { type: String, required: true, maxlength: 280 },
-    username: { typeL String, required: true },
+    username: { type: String, required: true },
     createdAt: {
         type: Date,
         default: Date.now,
