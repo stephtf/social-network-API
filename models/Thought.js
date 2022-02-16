@@ -1,7 +1,8 @@
-const mongoose = require('mongoose'); 
+const { Schema, model } = require('mongoose');
+
 
 // create new instance of the thought schema 
-const thoughtSchema = new mongoose.Schema(
+const thoughtSchema = new Schema(
 {
     thoughtText: { type: String, required: true, minlength: 1, maxlength: 280 }, 
     createdAt: {

@@ -1,9 +1,9 @@
 // reaction is schema only, so it won't become a model/table, but will be added to another model as a sub-document 
 
-const mongoose = require('mongoose'); 
+const { Schema, Types } = require('mongoose');
 
 // create new instance of the schema 
-const reactionSchema = new mongoose.Schema(
+const reactionSchema = new Schema(
 {
     reactionId: 
     // for reaction Id: use mongoose's ObjectId data type; default value is set to new ObjectId

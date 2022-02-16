@@ -1,7 +1,7 @@
-const mongoose = require('mongoose'); 
+const { Schema, model } = require('mongoose');
 
 // create new instance of the use schema 
-const userSchema = new mongoose.Schema(
+const userSchema = new Schema(
 {
     username: { type: String, Unique: true, required: true, trimmed: true }, 
     email: { type: String, required: true, unique: true},
