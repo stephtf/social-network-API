@@ -5,8 +5,8 @@ const userSchema = new Schema(
 {
     username: { type: String, Unique: true, required: true, trimmed: true }, 
     email: { type: String, required: true, unique: true},
-    thoughts: [{ type: Schema.Types.Id, ref: 'thought',}],
-    friends: [{ type: Schema.Types.Id, ref: 'user',}],
+    thoughts: [{ type: Schema.Types.ObjectId, ref: 'thought',}],
+    friends: [{ type: Schema.Types.ObjectId, ref: 'user',}],
 },
     {
     toJSON: {
