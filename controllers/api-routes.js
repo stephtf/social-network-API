@@ -81,9 +81,9 @@ app.delete('/users/:_id/friends/:friendId', async (req, res) => {
 
 // get all the thoughts
 // localhost:3001/api/thoughts
-app.get('/thoughts', (res, req) => {
+app.get('/thoughts', async (res, req) => {
     try {
-        const thoughts = Thought.find();
+        const thoughts = await Thought.find();
         res.status(200).json(thoughts);
     } catch (err) {
         res.status(500).json(err);
@@ -101,12 +101,14 @@ app.get('/thoughts/:_id', async (req, res) => {
     }
     });
 
-    // - GET 
-    //     - all the thoughts 
-
-    // GET
-    //     - a single thought by ID 
-
+app.post('/thoughts', async (req, res) => {
+    try {
+        const newThought = await Thought.create(req.body);
+        res.status(200).json(newThought);
+    } catch (err) {
+        res.status(500).json(err); 
+    }
+});
 
     // - POST 
     //     - create a new thought 
