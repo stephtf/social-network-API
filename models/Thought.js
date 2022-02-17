@@ -1,4 +1,5 @@
 const { Schema, model } = require('mongoose');
+const reactionSchema = require('./Reaction');
 
 
 // create new instance of the thought schema 
@@ -9,7 +10,7 @@ const thoughtSchema = new Schema(
         type: Date,
         default: Date.now,
     },
-    username: String,
+    username: { type: String, required: true },
     reactions: [{
         reactionSchema,
     }]

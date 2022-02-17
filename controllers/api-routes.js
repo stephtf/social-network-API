@@ -1,6 +1,7 @@
 const app = require('express').Router(); 
 const User = require('../models/User');
 const Thought = require('../models/Thought');
+// const Reaction = require('../models/Reaction');
 
 // get all users
 // localhost:3001/api/users
@@ -81,14 +82,25 @@ app.delete('/users/:_id/friends/:friendId', async (req, res) => {
 
 // get all the thoughts
 // localhost:3001/api/thoughts
-app.get('/thoughts', async (res, req) => {
-    try {
-        const thoughts = await Thought.find();
-        res.status(200).json(thoughts);
-    } catch (err) {
-        res.status(500).json(err);
-    }
-});
+app.get('/thoughts', (req, res) => {
+    Thought.find({}, (err, result) => {
+      if (result) {
+        res.status(200).json(result);
+      } else {
+        res.status(500).json({ error: 'something went wrong' });
+      }
+    });
+  });
+
+// i don't know why this code doesn't work, but the above one does:
+// app.get('/thoughts', async (res, req) => {
+//     try {
+//         const thoughts = await Thought.find();
+//         res.status(200).json(thoughts);
+//     } catch (err) {
+//         res.status(500).json(err);
+//     }
+// });
 
 // get a single thought by its id
 // localhost:3001/api/thoughts/id 
@@ -104,7 +116,10 @@ app.get('/thoughts/:_id', async (req, res) => {
 app.post('/thoughts', async (req, res) => {
     try {
         const newThought = await Thought.create(req.body);
-        res.status(200).json(newThought);
+        
+        const updateUser = await User.findOneAndUpdate({ username: req.body.username }, { $push: { thoughts: newThought } });
+        res.status(200).json(updateUser);
+
     } catch (err) {
         res.status(500).json(err); 
     }
