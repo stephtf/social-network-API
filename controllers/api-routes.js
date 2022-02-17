@@ -160,14 +160,15 @@ app.post('/thoughts/:_id/reactions', async (req, res) => {
     }
 });
 
-// The following routes are for the reactions to thoughts
-// - REACTIONS `/api/thoughts/:thoughtId/reactions`
-    // - POST 
-    //     - create a reaction of a thought (stored in the thought's field called 'reactions')
-
-
-    // - DELETE 
-    //     - pull/remove the reaction by the reactionID value 
-
+// delete a reaction to a thought 
+// localhost:3001/api/thoughts/:thoughtId/:reactionId 
+app.delete('/thoughts/:_id/:reactionId', async (req, res) => {
+    try {
+        const deleteReaction = await Thought.findOneAndUpdate({ _id: req.params._id }, { $pull: { reactions: [{ reactionBody: req.body.reactionBody }, { username: req.body.username }] }});
+        res.status(200).json(deleteReaction);
+    } catch (err) {
+        res.status(500).json(err);
+    }
+});
 
 module.exports = app; 
