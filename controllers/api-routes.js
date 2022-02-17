@@ -1,7 +1,7 @@
 const app = require('express').Router(); 
 const User = require('../models/User');
 const Thought = require('../models/Thought');
-// const Reaction = require('../models/Reaction');
+const Reaction = require('../models/Reaction');
 
 // get all users
 // localhost:3001/api/users
@@ -136,19 +136,29 @@ app.put('/thoughts/:_id', async (req, res) => {
     } catch (err) {
         res.status(500).json(err);
     }
-    });
+});
 
+// delete a thought by its id
+// localhost:3001/api/thoughts/:id 
+app.delete('/thoughts/:_id', async (req, res) => {
+    try {
+        const deletedThought = await Thought.findOneAndDelete({ _id: req.params._id });
+        res.status(200).json(deletedThought);
+    } catch (err) {
+        res.status(500).json(err);
+    }
+});
 
-
-    // - PUT 
-    //     - update a thought by ID 
-
-
-    // - DELETE 
-    //     - delete a thought by ID 
-
-
-
+// post a reaction to a thought 
+// localhost:3001/thoughts/:thoughtId/reactions 
+app.post('/thoughts/:id/reactions', async (req, res) => {
+    try {
+        const newReaction = await Thought.findOneAndUpdate({ _id: req.params._id }, { reactions: [{ reactionBody: req.body.reactionBody }, { username: req.body.username }] });
+        res.status(200).json(newReaction);
+    } catch (err) {
+        res.status(500).json(err);
+    }
+});
 
 // The following routes are for the reactions to thoughts
 // - REACTIONS `/api/thoughts/:thoughtId/reactions`
