@@ -91,11 +91,11 @@ app.get('/thoughts', (res, req) => {
 });
 
 // get a single thought by its id
-// localhost:3001/api/users/id 
-app.get('/users/:_id', async (req, res) => {
+// localhost:3001/api/thoughts/id 
+app.get('/thoughts/:_id', async (req, res) => {
     try {
-        const oneUser = await User.findOne({ _id: req.params._id });
-        res.status(200).json(oneUser);
+        const oneThought = await Thought.findOne({ _id: req.params._id });
+        res.status(200).json(oneThought);
     } catch (err) {
         res.status(500).json(err);
     }
