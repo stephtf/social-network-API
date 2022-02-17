@@ -68,14 +68,14 @@ app.put('/users/:_id/friends/:friendId', async (req, res) => {
     });
 
 // delete a friend of a specific user 
-app.delete('/users/:_id', async (req, res) => {
+app.delete('/users/:_id/friends/:friendId', async (req, res) => {
     try {
-        const deletedUser = await User.findOneAndDelete({_id: req.params._id });
-        res.status(200).json(deletedUser);
+        const deletedFriend = await User.findOne({ _id: req.params._id }).delete({ friends: req.params.friendId }); 
+        res.status(200).json(deletedFriend);
     } catch (err) {
-        res.status(500).json(err);
+        res.status(500).json(err); 
     }
-}); 
+    });
 
 
     // - DELETE 
