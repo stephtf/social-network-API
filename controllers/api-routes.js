@@ -103,7 +103,7 @@ app.get('/thoughts', (req, res) => {
 // });
 
 // get a single thought by its id
-// localhost:3001/api/thoughts/id 
+// localhost:3001/api/thoughts/:id 
 app.get('/thoughts/:_id', async (req, res) => {
     try {
         const oneThought = await Thought.findOne({ _id: req.params._id });
@@ -113,6 +113,8 @@ app.get('/thoughts/:_id', async (req, res) => {
     }
     });
 
+// create a new thought and then add that thought to the array on the user's table 
+// localhost:3001/api/thoughts
 app.post('/thoughts', async (req, res) => {
     try {
         const newThought = await Thought.create(req.body);
@@ -125,11 +127,17 @@ app.post('/thoughts', async (req, res) => {
     }
 });
 
-    // - POST 
-    //     - create a new thought 
+// update a thought by its id
+// localhost:3001/api/thoughts/:id 
+app.put('/thoughts/:_id', async (req, res) => {
+    try {
+        const updatedThought = await Thought.findOneAndUpdate({ _id: req.params._id }, { thoughtText: req.body.thoughtText, createdAt: req.body.createdAt });
+        res.status(200).json(updatedThought);
+    } catch (err) {
+        res.status(500).json(err);
+    }
+    });
 
-    // POST
-        // - push that new thought to the id of the user (the user's thought array)
 
 
     // - PUT 
