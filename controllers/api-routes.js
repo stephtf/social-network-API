@@ -1,5 +1,6 @@
 const app = require('express').Router(); 
 const User = require('../models/User');
+const Thought = require('../models/Thought');
 
 // get all users
 // localhost:3001/api/users
@@ -12,7 +13,7 @@ try {
 }
 });
 
-// get a single user by their Id
+// get a single user by their id
 // localhost:3001/api/users/id 
 app.get('/users/:_id', async (req, res) => {
 try {
@@ -34,7 +35,7 @@ app.post('/users', async (req, res) => {
     }
     });
 
-// update user by their ID
+// update user by their id
 // localhost:3001/api/users
 app.put('/users/:_id', async (req, res) => {
     try {
@@ -68,23 +69,37 @@ app.put('/users/:_id/friends/:friendId', async (req, res) => {
     });
 
 // delete a friend of a specific user 
+// localhost:3001/users/:_id/friends/:friendId
 app.delete('/users/:_id/friends/:friendId', async (req, res) => {
     try {
-        const deletedFriend = await User.findOne({ _id: req.params._id }).delete({ friends: req.params.friendId }); 
+        const deletedFriend = await User.findOneAndUpdate({ _id: req.params._id }, { $pull: { friends: req.params.friendId } }, { new: true });
         res.status(200).json(deletedFriend);
     } catch (err) {
         res.status(500).json(err); 
     }
     });
 
+// get all the thoughts
+// localhost:3001/api/thoughts
+app.get('/thoughts', (res, req) => {
+    try {
+        const thoughts = Thought.find();
+        res.status(200).json(thoughts);
+    } catch (err) {
+        res.status(500).json(err);
+    }
+});
 
-    // - DELETE 
-    //     - remove a friend from a user's friend list 
-
-
-
-
-// The following GET route is for thoughts: `/api/thoughts`
+// get a single thought by its id
+// localhost:3001/api/users/id 
+app.get('/users/:_id', async (req, res) => {
+    try {
+        const oneUser = await User.findOne({ _id: req.params._id });
+        res.status(200).json(oneUser);
+    } catch (err) {
+        res.status(500).json(err);
+    }
+    });
 
     // - GET 
     //     - all the thoughts 
