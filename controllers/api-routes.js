@@ -70,7 +70,7 @@ app.put('/users/:_id/friends/:friendId', async (req, res) => {
     });
 
 // delete a friend of a specific user 
-// localhost:3001/users/:_id/friends/:friendId
+// localhost:3001/api/users/:_id/friends/:friendId
 app.delete('/users/:_id/friends/:friendId', async (req, res) => {
     try {
         const deletedFriend = await User.findOneAndUpdate({ _id: req.params._id }, { $pull: { friends: req.params.friendId } }, { new: true });
@@ -150,8 +150,8 @@ app.delete('/thoughts/:_id', async (req, res) => {
 });
 
 // post a reaction to a thought 
-// localhost:3001/thoughts/:thoughtId/reactions 
-app.post('/thoughts/:id/reactions', async (req, res) => {
+// localhost:3001/api/thoughts/:thoughtId/reactions 
+app.post('/thoughts/:_id/reactions', async (req, res) => {
     try {
         const newReaction = await Thought.findOneAndUpdate({ _id: req.params._id }, { reactions: [{ reactionBody: req.body.reactionBody }, { username: req.body.username }] });
         res.status(200).json(newReaction);
