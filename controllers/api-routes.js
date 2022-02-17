@@ -14,9 +14,9 @@ try {
 
 // get a single user by their Id
 // localhost:3001/api/users/id 
-app.get('/users/:id', async (req, res) => {
+app.get('/users/:_id', async (req, res) => {
 try {
-    const oneUser = await User.findOne({"id": `${req.params.id}`});
+    const oneUser = await User.findOne({ _id: req.params._id });
     res.status(200).json(oneUser);
 } catch (err) {
     res.status(500).json(err);
@@ -27,29 +27,55 @@ try {
 // localhost:3001/api/users
 app.post('/users', async (req, res) => {
     try {
-        const newUser = await User.insertOne({ username: req.body.name, email: req.body.email }); 
+        const newUser = await User.create({ username: req.body.username, email: req.body.email }); 
         res.status(200).json(newUser);
     } catch (err) {
         res.status(500).json(err); 
     }
     });
 
+// update user by their ID
+// localhost:3001/api/users
+app.put('/users/:_id', async (req, res) => {
+    try {
+        const updatedUser = await User.findOneAndUpdate({_id: req.params._id}, { username: req.body.username, email: req.body.email });
+        res.status(200).json(updatedUser);
+    } catch (err) {
+        res.status(500).json(err);
+    }
+}); 
 
+// delete a user by their id 
+// localhost:3001/api/users/:_id
+app.delete('/users/:_id', async (req, res) => {
+    try {
+        const deletedUser = await User.findOneAndDelete({_id: req.params._id });
+        res.status(200).json(deletedUser);
+    } catch (err) {
+        res.status(500).json(err);
+    }
+}); 
 
-// - USERS - PUT `/api/users`
-//     - upate a user by ID 
+// add a friend of a specific user 
+// localhost:3001/api/users/:id/friends/:friendId
+app.put('/users/:_id/friends/:friendId', async (req, res) => {
+    try {
+        const newFriend = await User.findOneAndUpdate({ _id: req.params._id }, { friends: req.params.friendId }); 
+        res.status(200).json(newFriend);
+    } catch (err) {
+        res.status(500).json(err); 
+    }
+    });
 
-
-
-
-// - USERS - DELETE `/api/users`
-//     - delete a user by ID 
-
-
-
-// The following POST route is for adding a friend of the user: `/api/users/:userId/friends/:friendId`
-    // - POST 
-    //     - add a new friend to a user's friend list 
+// delete a friend of a specific user 
+app.delete('/users/:_id', async (req, res) => {
+    try {
+        const deletedUser = await User.findOneAndDelete({_id: req.params._id });
+        res.status(200).json(deletedUser);
+    } catch (err) {
+        res.status(500).json(err);
+    }
+}); 
 
 
     // - DELETE 
