@@ -1,9 +1,10 @@
 # Social Network API
 
 ## Description 
-This project provides the back end for a social network application, including API routes that connect to a mongoDB database. The collections of the application include users, thoughts, and reactions. Users are added with a username and an email address. Users can post thoughts, which include a message that is linked to their username. Once a thought it posted, other users can post their reactions to the thought. The number of thoughts and reactions are counted in each respective collection. 
+This project provides the API for a social network application while using MongoDB to store data. The collections of the application include users, thoughts, and reactions. Users create an account with a username and emailaddress. They are able to share their thoughts by posting "thought" messages, which are linked to their usernames. Once a thought it posted, other users can post their reactions to the thought. The number of thoughts and reactions are counted in each respective collection. In addition to reacting to thoughts, users can create a friend list. 
 
 ## Walkthrough
+Checkout my walkthrough  video, where I test out each route on Insomnia: https://drive.google.com/file/d/1aKRPtxuG1z6-kNVcG5ukdanMmiZEaPk4/view?usp=sharing
 
 ## Github Link
 Check out the repo on (Github)[https://github.com/stephtf/social-network-API.git]
