@@ -153,7 +153,7 @@ app.delete('/thoughts/:_id', async (req, res) => {
 // localhost:3001/api/thoughts/:thoughtId/reactions 
 app.post('/thoughts/:_id/reactions', async (req, res) => {
     try {
-        const newReaction = await Thought.findOneAndUpdate({ _id: req.params._id }, { reactions: [{ reactionBody: req.body.reactionBody }, { username: req.body.username }] });
+        const newReaction = await Thought.findOneAndUpdate({ _id: req.params._id }, { reactions: { reactionBody: req.body.reactionBody }});
         res.status(200).json(newReaction);
     } catch (err) {
         res.status(500).json(err);
@@ -162,9 +162,9 @@ app.post('/thoughts/:_id/reactions', async (req, res) => {
 
 // delete a reaction to a thought 
 // localhost:3001/api/thoughts/:thoughtId/:reactionId 
-app.delete('/thoughts/:_id/:reactionId', async (req, res) => {
+app.delete('/thoughts/:_id/:_id', async (req, res) => {
     try {
-        const deleteReaction = await Thought.findOneAndUpdate({ _id: req.params._id }, { $pull: { reactions: [{ reactionBody: req.body.reactionBody }, { username: req.body.username }] }});
+        const deleteReaction = await Thought.findOneAndUpdate({ _id: req.params._id }, { $pull: { reactions: { _id: req.params._id } } }, { new: true });
         res.status(200).json(deleteReaction);
     } catch (err) {
         res.status(500).json(err);
